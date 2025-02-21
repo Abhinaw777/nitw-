@@ -3,40 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NITW.ac.in - Excellence in Education</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.159.0/three.min.js"></script>
+    <title>NIT Warangal</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --primary: #1a5f7a;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
         }
 
         body {
-            background: white;
-            color: #333;
-            overflow-x: hidden;
+            background: #fff;
         }
 
-        /* Enhanced Navigation */
-        .nav-container {
-            background: rgba(255, 255, 255, 0.95);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(5px);
-        }
-
+        /* Navbar */
         .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: white;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
+        }
+
+        .logo-img {
+            height: 60px;
+            transition: transform 0.3s;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
         }
 
         .nav-links {
@@ -45,134 +51,123 @@
         }
 
         .nav-links a {
-            color: #333;
+            color: var(--secondary);
             text-decoration: none;
             font-weight: 500;
             font-size: 1.1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            background: #f0f0f0;
-            transform: translateY(-2px);
+            color: var(--primary);
         }
 
-        /* Enhanced Slider */
-        #image-slider {
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('main.jpeg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* News Ticker */
+        .news-ticker {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Image Slider */
+        .slider-container {
             width: 100%;
-            max-width: 1400px;
             height: 600px;
-            margin: 100px auto 50px;
             position: relative;
             overflow: hidden;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            transform: perspective(1000px) rotateX(2deg);
         }
 
-        .spslide__track {
+        .slider {
             display: flex;
             width: 300%;
             height: 100%;
-            animation: slide 15s infinite ease-in-out;
+            transition: transform 0.5s ease-in-out;
+            animation: slideShow 15s infinite;
         }
 
-        .spslide__slide {
+        .slide {
             width: 33.33%;
             height: 100%;
-            position: relative;
-            overflow: hidden;
         }
 
-        .spslide__slide img {
+        .slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transform: scale(1.1);
-            transition: transform 0.5s ease;
         }
 
-        .spslide__slide:hover img {
-            transform: scale(1.2);
+        @keyframes slideShow {
+            0% { transform: translateX(0); }
+            33% { transform: translateX(-33.33%); }
+            66% { transform: translateX(-66.66%); }
+            100% { transform: translateX(0); }
         }
 
-        /* Enhanced Announcements */
-        .announcement-container {
-            background: linear-gradient(135deg, #fff, #f5f5f5);
-            padding: 2rem;
-            margin: 2rem auto;
-            max-width: 1400px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        /* Events Section */
+        .events {
+            padding: 5rem 5%;
+            background: #f8f9fa;
         }
 
-        .announcement-title {
-            font-size: 2rem;
-            color: #333;
-            margin-bottom: 1rem;
+        .section-title {
             text-align: center;
-            font-weight: 700;
-        }
-
-        .announcement-scroll {
-            background: white;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Enhanced Main Campus Section */
-        .main-campus {
-            max-width: 1400px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-            position: relative;
-        }
-
-        .main-campus img {
-            width: 100%;
-            border-radius: 20px;
-            transform: perspective(1000px) rotateX(2deg);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .main-campus img:hover {
-            transform: perspective(1000px) rotateX(0deg);
-        }
-
-        /* Enhanced Events Section */
-        .events-container {
-            max-width: 1400px;
-            margin: 4rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 3rem;
         }
 
         .events-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .event-card {
             background: white;
-            border-radius: 15px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
         }
 
         .event-card:hover {
             transform: translateY(-10px);
         }
 
-        .event-card img {
+        .event-img {
             width: 100%;
             height: 200px;
             object-fit: cover;
@@ -183,127 +178,182 @@
         }
 
         .event-title {
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.3rem;
+            color: var(--secondary);
             margin-bottom: 0.5rem;
         }
 
         .event-date {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* Animations */
-        @keyframes slide {
-            0%, 28% { transform: translateX(0); }
-            33%, 61% { transform: translateX(-33.33%); }
-            66%, 94% { transform: translateX(-66.66%); }
-            100% { transform: translateX(0); }
+            color: var(--accent);
+            font-weight: 500;
         }
 
         /* About Section */
-        .about-section {
-            max-width: 1400px;
-            margin: 4rem auto;
-            padding: 2rem;
+        .about {
+            padding: 5rem 5%;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
 
-        .about-text {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #444;
+        .about-content {
             max-width: 800px;
             margin: 0 auto;
+            line-height: 1.8;
+            font-size: 1.2rem;
+            color: #444;
+        }
+
+        /* Quick Links */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 3rem 5%;
+            background: var(--secondary);
+            color: white;
+        }
+
+        .quick-link {
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-5px);
+        }
+
+        .quick-link h3 {
+            margin-bottom: 1rem;
+        }
+
+        .quick-link ul {
+            list-style: none;
+        }
+
+        .quick-link a {
+            color: white;
+            text-decoration: none;
+            line-height: 1.8;
         }
     </style>
 </head>
 <body>
-    <div class="nav-container">
-        <nav class="navbar">
-            <img src="Screenshot 2025-02-15 211643.png" height="75px" alt="NITW LOGO">
-            <div class="nav-links">
-                <a href="#">Home</a>
-                <a href="#">Academics</a>
-                <a href="#">Admissions</a>
-                <a href="#">Campus Life</a>
-                <a href="#">Contact</a>
-            </div>
-        </nav>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <img src="Screenshot 2025-02-15 211643.png" alt="NITW Logo" class="logo-img">
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Academics</a>
+            <a href="#">Research</a>
+            <a href="#">Admissions</a>
+            <a href="#">Campus Life</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to NIT Warangal</h1>
+            <p>Empowering Minds, Engineering Tomorrow</p>
+        </div>
+    </section>
+
+    <!-- News Ticker -->
+    <div class="news-ticker">
+        <marquee>
+            🎓 Admissions Open for 2025-26 Academic Year | 
+            🏆 NITW Ranked Among Top 10 Technical Institutes | 
+            📢 International Conference on Emerging Technologies - March 2025 |
+            🌟 Research Grants Worth ₹10 Crore Awarded
+        </marquee>
     </div>
 
-    <div id="image-slider">
-        <div class="spslide__track">
-            <div class="spslide__slide"><img src="ihc_2024-5-10-16-27-0.jpg" alt="Image 1"></div>
-            <div class="spslide__slide"><img src="GH_2024-5-10-11-11-6.jpg" alt="Image 2"></div>
-            <div class="spslide__slide"><img src="ATM_2024-5-10-11-13-24.jpg" alt="Image 3"></div>
+    <!-- Image Slider -->
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide"><img src="ihc_2024-5-10-16-27-0.jpg" alt="Campus Life"></div>
+            <div class="slide"><img src="GH_2024-5-10-11-11-6.jpg" alt="Academic Block"></div>
+            <div class="slide"><img src="ATM_2024-5-10-11-13-24.jpg" alt="Research Facilities"></div>
         </div>
     </div>
 
-    <div class="announcement-container">
-        <h2 class="announcement-title">Latest Announcements</h2>
-        <div class="announcement-scroll">
-            <marquee direction="left" scrollamount="11">
-                Welcome to NITW! Stay updated with the latest news and events. | Admission Open for 2025-26 Academic Year | 
-                Research Grant Applications Now Open | International Conference on Technology Innovation - March 2025
-            </marquee>
-        </div>
-    </div>
-
-    <div class="main-campus">
-        <h1 style="text-align: center; margin-bottom: 2rem; font-size: 2.5rem; color: #333;">Main Campus</h1>
-        <img src="main.jpeg" alt="NIT WARANGAL MAIN BUILDING">
-    </div>
-
-    <div class="about-section">
-        <p class="about-text">
-            National Institute of Technology Warangal (NIT Warangal or NITW) is a premier public technical and research university 
-            located in Warangal, India. Known for its excellence in engineering education and research, NITW has consistently 
-            ranked among the top technical institutions in the country.
-        </p>
-    </div>
-
-    <div class="events-container">
-        <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2rem; color: #333;">Upcoming Events</h2>
+    <!-- Events Section -->
+    <section class="events">
+        <h2 class="section-title">Upcoming Events</h2>
         <div class="events-grid">
             <div class="event-card">
-                <img src="OIP.jpeg" alt="Hackathon 2025">
+                <img src="OIP.jpeg" alt="Hackathon" class="event-img">
                 <div class="event-content">
-                    <div class="event-title">Hackathon 2025</div>
-                    <div class="event-date">January 5, 2025</div>
+                    <h3 class="event-title">Annual Hackathon 2025</h3>
+                    <p class="event-date">January 5-6, 2025</p>
                 </div>
             </div>
             <div class="event-card">
-                <img src="OIP (1).jpeg" alt="Tech Talk">
+                <img src="OIP (1).jpeg" alt="Tech Talk" class="event-img">
                 <div class="event-content">
-                    <div class="event-title">Tech Talk Series</div>
-                    <div class="event-date">January 15, 2025</div>
+                    <h3 class="event-title">Innovation Summit</h3>
+                    <p class="event-date">January 15, 2025</p>
                 </div>
             </div>
             <div class="event-card">
-                <img src="download.jpeg" alt="Cultural Fest">
+                <img src="download.jpeg" alt="Spring Spree" class="event-img">
                 <div class="event-content">
-                    <div class="event-title">Spring Spree Cultural Fest</div>
-                    <div class="event-date">February 5, 2025</div>
+                    <h3 class="event-title">Spring Spree 2025</h3>
+                    <p class="event-date">February 5-7, 2025</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        // Add 3D parallax effect to images
-        document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.event-card');
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            
-            cards.forEach(card => {
-                card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-            });
-        });
-    </script>
+    <!-- About Section -->
+    <section class="about">
+        <h2 class="section-title">About NITW</h2>
+        <div class="about-content">
+            <p>National Institute of Technology Warangal (NITW) is a premier technical institution known for its excellence in engineering education and research. Established in 1959, NITW has consistently ranked among the top technical institutions in India, fostering innovation, research, and holistic development.</p>
+        </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="quick-links">
+        <div class="quick-link">
+            <h3>Academics</h3>
+            <ul>
+                <li><a href="#">Departments</a></li>
+                <li><a href="#">Programs</a></li>
+                <li><a href="#">Academic Calendar</a></li>
+                <li><a href="#">Library</a></li>
+            </ul>
+        </div>
+        <div class="quick-link">
+            <h3>Research</h3>
+            <ul>
+                <li><a href="#">Research Centers</a></li>
+                <li><a href="#">Publications</a></li>
+                <li><a href="#">Projects</a></li>
+                <li><a href="#">Collaborations</a></li>
+            </ul>
+        </div>
+        <div class="quick-link">
+            <h3>Campus Life</h3>
+            <ul>
+                <li><a href="#">Hostels</a></li>
+                <li><a href="#">Sports</a></li>
+                <li><a href="#">Clubs</a></li>
+                <li><a href="#">Events</a></li>
+            </ul>
+        </div>
+        <div class="quick-link">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">Admissions</a></li>
+                <li><a href="#">Placements</a></li>
+                <li><a href="#">Alumni</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </div>
+    </section>
 </body>
 </html>
