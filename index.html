@@ -12,14 +12,9 @@
             font-family: 'Inter', sans-serif;
         }
 
-        :root {
-            --primary: #1a5f7a;
-            --secondary: #2c3e50;
-            --accent: #e74c3c;
-        }
-
         body {
             background: #fff;
+            overflow-x: hidden;
         }
 
         /* Navbar */
@@ -27,18 +22,19 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             padding: 1rem 5%;
             box-shadow: 0 2px 15px rgba(0,0,0,0.1);
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            backdrop-filter: blur(10px);
         }
 
         .logo-img {
             height: 60px;
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
         }
 
         .logo-img:hover {
@@ -51,15 +47,18 @@
         }
 
         .nav-links a {
-            color: var(--secondary);
+            color: #2c3e50;
             text-decoration: none;
             font-weight: 500;
             font-size: 1.1rem;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
         }
 
         .nav-links a:hover {
-            color: var(--primary);
+            background: #f0f0f0;
+            color: #1a5f7a;
         }
 
         /* Hero Section */
@@ -79,6 +78,7 @@
         .hero-content {
             max-width: 800px;
             padding: 2rem;
+            animation: fadeInUp 1s ease-out;
         }
 
         .hero-content h1 {
@@ -87,90 +87,172 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .hero-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
+        /* Improved News Ticker */
+        .news-ticker-container {
+            background: linear-gradient(135deg, #1a5f7a, #2c3e50);
+            padding: 12px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
 
-        /* News Ticker */
         .news-ticker {
-            background: var(--primary);
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .news-ticker-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 25s linear infinite;
+        }
+
+        .news-ticker-content:hover {
+            animation-play-state: paused;
+        }
+
+        .news-ticker-item {
+            display: inline-block;
+            padding: 0 40px;
             color: white;
-            padding: 1rem;
+            font-weight: 500;
             font-size: 1.1rem;
+            transition: transform 0.3s ease;
+            border-right: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .news-ticker-item:last-child {
+            border-right: none;
+        }
+
+        .news-ticker-item:hover {
+            transform: scale(1.05);
+        }
+
+        .news-ticker-item i {
+            margin-right: 8px;
+            font-size: 1.2rem;
+            color: #ffcc00;
+        }
+
+        @keyframes ticker {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                transform: translate3d(-100%, 0, 0);
+            }
         }
 
         /* Image Slider */
+        .slider-section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
         .slider-container {
-            width: 100%;
-            height: 600px;
+            width: 90%;
+            max-width: 1200px;
+            height: 500px;
+            margin: 0 auto;
             position: relative;
             overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .slider {
             display: flex;
             width: 300%;
             height: 100%;
-            transition: transform 0.5s ease-in-out;
             animation: slideShow 15s infinite;
         }
 
         .slide {
             width: 33.33%;
             height: 100%;
+            position: relative;
         }
 
         .slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
         }
 
-        @keyframes slideShow {
-            0% { transform: translateX(0); }
-            33% { transform: translateX(-33.33%); }
-            66% { transform: translateX(-66.66%); }
-            100% { transform: translateX(0); }
+        .slide:hover img {
+            transform: scale(1.05);
         }
 
         /* Events Section */
         .events {
             padding: 5rem 5%;
-            background: #f8f9fa;
+            background: #fff;
         }
 
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            color: var(--secondary);
+            color: #2c3e50;
             margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: #1a5f7a;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
         }
 
         .events-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
+            justify-content: center;
         }
 
         .event-card {
+            width: calc(33.33% - 2rem);
+            min-width: 300px;
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.5s ease;
         }
 
-        .event-card:hover {
-            transform: translateY(-10px);
+        .event-card:nth-child(even) {
+            transform: translateX(100px);
+        }
+
+        .event-card.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .event-img {
             width: 100%;
             height: 200px;
             object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .event-card:hover .event-img {
+            transform: scale(1.1);
         }
 
         .event-content {
@@ -179,28 +261,13 @@
 
         .event-title {
             font-size: 1.3rem;
-            color: var(--secondary);
+            color: #2c3e50;
             margin-bottom: 0.5rem;
         }
 
         .event-date {
-            color: var(--accent);
+            color: #e74c3c;
             font-weight: 500;
-        }
-
-        /* About Section */
-        .about {
-            padding: 5rem 5%;
-            background: white;
-            text-align: center;
-        }
-
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.8;
-            font-size: 1.2rem;
-            color: #444;
         }
 
         /* Quick Links */
@@ -209,7 +276,7 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             padding: 3rem 5%;
-            background: var(--secondary);
+            background: #2c3e50;
             color: white;
         }
 
@@ -217,39 +284,201 @@
             padding: 1.5rem;
             background: rgba(255,255,255,0.1);
             border-radius: 10px;
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
         }
 
         .quick-link:hover {
             transform: translateY(-5px);
+            background: rgba(255,255,255,0.2);
         }
 
         .quick-link h3 {
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .quick-link h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: #3498db;
+            border-radius: 2px;
         }
 
         .quick-link ul {
             list-style: none;
         }
 
+        .quick-link li {
+            margin-bottom: 10px;
+        }
+
         .quick-link a {
-            color: white;
+            color: #ecf0f1;
             text-decoration: none;
-            line-height: 1.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .quick-link a:hover {
+            color: #3498db;
+            transform: translateX(5px);
+        }
+
+        /* Beautiful Footer */
+        .footer {
+            background: linear-gradient(to right, #1a2a3a, #2c3e50);
+            color: white;
+            padding: 0;
+            position: relative;
+        }
+
+        .footer-wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            transform: translateY(-99%);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 4rem 5% 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-logo-section {
+            flex: 1 1 300px;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo {
+            max-width: 180px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #b3c1d0;
+            max-width: 300px;
+        }
+
+        .footer-contact {
+            flex: 1 1 250px;
+        }
+
+        .footer-social {
+            flex: 1 1 250px;
+        }
+
+        .footer-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: #3498db;
+            border-radius: 2px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            color: #b3c1d0;
+        }
+
+        .contact-icon {
+            margin-right: 10px;
+            color: #3498db;
+            font-size: 1.2rem;
+        }
+
+        .social-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .social-icon:hover {
+            background: #3498db;
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            background: rgba(0,0,0,0.2);
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #b3c1d0;
+        }
+
+        .footer-bottom a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideShow {
+            0%, 28% { transform: translateX(0); }
+            33%, 61% { transform: translateX(-33.33%); }
+            66%, 94% { transform: translateX(-66.66%); }
+            100% { transform: translateX(0); }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar">
         <img src="Screenshot 2025-02-15 211643.png" alt="NITW Logo" class="logo-img">
         <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Academics</a>
-            <a href="#">Research</a>
-            <a href="#">Admissions</a>
-            <a href="#">Campus Life</a>
-            <a href="#">Contact</a>
+            <a href="https://nitw.ac.in/">Home</a>
+            <a href="https://www.nitw.ac.in/DeanAcademic">Academics</a>
+            <a href="https://www.nitw.ac.in/rc">Research</a>
+            <a href="https://www.nitw.ac.in/path/?dept=/ad2021">Admissions</a>
+            <a href="https://www.nitw.ac.in/if">Campus Life</a>
+            <a href="https://www.nitw.ac.in/contact">Contact</a>
         </div>
     </nav>
 
@@ -261,24 +490,42 @@
         </div>
     </section>
 
-    <!-- News Ticker -->
-    <div class="news-ticker">
-        <marquee>
-            🎓 Admissions Open for 2025-26 Academic Year | 
-            🏆 NITW Ranked Among Top 10 Technical Institutes | 
-            📢 International Conference on Emerging Technologies - March 2025 |
-            🌟 Research Grants Worth ₹10 Crore Awarded
-        </marquee>
-    </div>
-
-    <!-- Image Slider -->
-    <div class="slider-container">
-        <div class="slider">
-            <div class="slide"><img src="ihc_2024-5-10-16-27-0.jpg" alt="Campus Life"></div>
-            <div class="slide"><img src="GH_2024-5-10-11-11-6.jpg" alt="Academic Block"></div>
-            <div class="slide"><img src="ATM_2024-5-10-11-13-24.jpg" alt="Research Facilities"></div>
+    <!-- Improved News Ticker -->
+    <div class="news-ticker-container">
+        <div class="news-ticker">
+            <div class="news-ticker-content">
+                <div class="news-ticker-item">
+                    <i class="fas fa-graduation-cap"></i> Admissions Open for 2025-26 Academic Year
+                </div>
+                <div class="news-ticker-item">
+                    <i class="fas fa-trophy"></i> NITW Ranked Among Top 10 Technical Institutes
+                </div>
+                <div class="news-ticker-item">
+                    <i class="fas fa-bullhorn"></i> International Conference on Emerging Technologies - March 2025
+                </div>
+                <div class="news-ticker-item">
+                    <i class="fas fa-star"></i> Research Grants Worth ₹10 Crore Awarded
+                </div>
+                <div class="news-ticker-item">
+                    <i class="fas fa-handshake"></i> MoU Signed with Microsoft for AI Research Center
+                </div>
+                <div class="news-ticker-item">
+                    <i class="fas fa-calendar-alt"></i> Annual Technical Fest 'TechnoVision' - April 10-12, 2025
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Image Slider Section -->
+    <section class="slider-section">
+        <div class="slider-container">
+            <div class="slider">
+                <div class="slide"><img src="ihc_2024-5-10-16-27-0.jpg" alt="Campus Life"></div>
+                <div class="slide"><img src="GH_2024-5-10-11-11-6.jpg" alt="Academic Block"></div>
+                <div class="slide"><img src="ATM_2024-5-10-11-13-24.jpg" alt="Research Facilities"></div>
+            </div>
+        </div>
+    </section>
 
     <!-- Events Section -->
     <section class="events">
@@ -305,14 +552,6 @@
                     <p class="event-date">February 5-7, 2025</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about">
-        <h2 class="section-title">About NITW</h2>
-        <div class="about-content">
-            <p>National Institute of Technology Warangal (NITW) is a premier technical institution known for its excellence in engineering education and research. Established in 1959, NITW has consistently ranked among the top technical institutions in India, fostering innovation, research, and holistic development.</p>
         </div>
     </section>
 
@@ -355,5 +594,81 @@
             </ul>
         </div>
     </section>
+
+    <!-- Beautiful Footer -->
+    <footer class="footer">
+        <svg class="footer-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
+            <path fill="#fff" fill-opacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
+        </svg>
+        
+        <div class="footer-content">
+            <div class="footer-logo-section">
+                <img src="Screenshot 2025-02-15 211643.png" alt="NITW Logo" class="footer-logo">
+                <p class="footer-description">
+                    NIT Warangal is one of India's premier technical institutions. Established in 1959, we've been at the forefront of technical education and research excellence.
+                </p>
+            </div>
+            
+            <div class="footer-contact">
+                <h3 class="footer-title">Contact Us</h3>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt contact-icon"></i>
+                    <div>
+                        NIT Warangal Campus,<br>
+                        Warangal, Telangana 506004
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt contact-icon"></i>
+                    <div>+91 (870) 246-2000</div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope contact-icon"></i>
+                    <div>admissions@nitw.ac.in</div>
+                </div>
+            </div>
+            
+            <div class="footer-social">
+                <h3 class="footer-title">Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div style="margin-top: 1.5rem;">
+                    <div class="contact-item">
+                        <i class="fas fa-clock contact-icon"></i>
+                        <div>
+                            Administrative Office Hours:<br>
+                            Monday - Friday: 9:00 AM - 5:30 PM
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 National Institute of Technology, Warangal. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for card animations
+        const cards = document.querySelectorAll('.event-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html>
